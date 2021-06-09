@@ -7,10 +7,10 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [master]
-  #paths:
-  #  - ".github/workflows/*"
-  #  - "tests/unit/**"
-  #  - "src/**"
+  paths:
+    - ".github/workflows/*"
+    - "tests/unit/**"
+    - "src/**"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -33,17 +33,18 @@ jobs:
           node -v
           npm -v
 
-      - name: lint and test
+      - name: npm install lint and test
         run: |
           npm install
+
+      - name: check lint
+        run: |
           npm run lint
+
+       - name: npm run test
+        run: |
           npm run test
 
       - name: build
         run: |
           npm run build
-
-  test1:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo 'hello'
