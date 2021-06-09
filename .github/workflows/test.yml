@@ -26,7 +26,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: use Node.js
         uses: actions/setup-node@v1
-        with: node-version:14
+        with: node-version:14.x
       - name: print node version
         run: |
           node -v
