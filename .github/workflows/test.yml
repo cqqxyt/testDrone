@@ -32,3 +32,11 @@ jobs:
         run: |
           node -v
           npm -v
+    test1:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: build
+          run: |
+            npm install
+            npm build
