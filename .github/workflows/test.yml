@@ -41,6 +41,7 @@ jobs:
             npm -v
 
     test2:
-      runs-on: ubuntu-latest
-    steps:
-      run: npm build
+      build:
+        runs-on: ubuntu-latest
+      steps:
+        run: npm build
