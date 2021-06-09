@@ -8,9 +8,9 @@ on:
   push:
     branches: [master]
   paths:
-    - '.github/workflows/*'
-    - 'tests/unit/**'
-    - 'src/**'
+    - ".github/workflows/*"
+    - "tests/unit/**"
+    - "src/**"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -26,7 +26,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: use Node.js
         uses: actions/setup-node@v1
-        with: node-version: 14
+        with:
+          node-version: 14
       - name: print node version
         run: |
           node -v
