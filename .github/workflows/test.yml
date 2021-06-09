@@ -33,7 +33,7 @@ jobs:
 
         # Runs a single command using the runners shell
         - name: use Node.js
-          uses: actions/setuo-node@v1
+          uses: actions/setup-node@v1
           with: node-version:14
         - name: print node version
           run: |
