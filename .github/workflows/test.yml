@@ -8,7 +8,7 @@ on:
   push:
     branches: [master]
   paths:
-    - ".github/workflow/*"
+    - ".github/workflows/*"
     - "tests/unit/**"
     - "src/**"
 
