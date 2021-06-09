@@ -32,8 +32,15 @@ jobs:
         run: |
           node -v
           npm -v
-          npm install
-          npm build
+
+      - name: lint and test
+        run: |
+          npm run lint
+          npm run test
+
+      - name: build
+        run: |
+          npm run build
 
   test1:
     runs-on: ubuntu-latest
