@@ -35,7 +35,7 @@ jobs:
           npm install
           npm build
 
-    test1:
-      runs-on: ubuntu-latest
-      steps:
-        - run: echo 'hello'
+  test1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'hello'
