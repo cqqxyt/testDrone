@@ -6,11 +6,11 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [master]
-  # paths:
-  #   - ".github/workflows/*"
-  #   - "tests/unit/**"
-  #   - "src/**"
+      branches: [master]
+  paths:
+      - '.github/workflows/*'
+      - 'tests/unit/**'
+      - 'src/**'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -33,7 +33,7 @@ jobs:
           node -v
           npm -v
 
-      - name: npm install lint and test
+      - name: npm install
         run: |
           npm install
 
