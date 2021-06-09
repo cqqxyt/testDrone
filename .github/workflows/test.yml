@@ -7,10 +7,10 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [master]
-  paths:
-    - ".github/workflows/*"
-    - "tests/unit/**"
-    - "src/**"
+  # paths:
+  #  - ".github/workflows/*"
+  #  - "tests/unit/**"
+  #  - "src/**"
 
   pull_request:
     branches: [master]
@@ -39,9 +39,3 @@ jobs:
           run: |
             node -v
             npm -v
-
-    test2:
-      build:
-        runs-on: ubuntu-latest
-      steps:
-        run: npm build
