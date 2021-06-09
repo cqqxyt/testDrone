@@ -35,6 +35,7 @@ jobs:
 
       - name: lint and test
         run: |
+          npm install
           npm run lint
           npm run test
 
