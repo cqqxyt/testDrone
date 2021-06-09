@@ -32,12 +32,10 @@ jobs:
         run: |
           node -v
           npm -v
+          npm install
+          npm build
 
     test1:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v2
-        - name: build
-          run: |
-            npm install
-            npm build
+        - run: echo 'hello'
