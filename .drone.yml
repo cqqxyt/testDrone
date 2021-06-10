@@ -8,9 +8,6 @@ steps:
     commands:
       - npm install
       - npm run test
-trigger:
-  branch:
-    - master
-  event:
-    - pull_request
-    - push
+    when:
+      branch: master
+      event: push
