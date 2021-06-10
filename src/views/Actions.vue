@@ -1,7 +1,7 @@
 <template>
   <div class="text-align-center">
     <label>xxxx<input type="text" @input="actionInputIfTrue" /></label>
-    <button @click="actionClick()">Click111</button>
+    <button @click="actionClick()">Click1</button>
     <p>{{ $store.getters.text }}</p>
   </div>
 </template>
