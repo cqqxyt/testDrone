@@ -1,0 +1,10 @@
+kind: pipeline
+name: api
+steps:
+  # api unit test
+  - name: api-test
+    image: node:11
+    depends_on: [clone]
+    commands:
+      - npm install
+      - npm run test
