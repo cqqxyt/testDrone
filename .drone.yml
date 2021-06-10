@@ -2,7 +2,7 @@ kind: pipeline
 name: api
 steps:
   # api unit test
-  - name: test1
+  - name: test2
     image: node:16
     depends_on: [clone]
     commands:
