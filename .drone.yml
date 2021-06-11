@@ -2,7 +2,7 @@ kind: pipeline
 name: drone-server
 steps:
   - name: restore-cache
-     image: drillster/drone-volume-cache
+     image: meltwater/drone-cache
      volumes:
        - /tmp/chahe/:cache
      settings:
