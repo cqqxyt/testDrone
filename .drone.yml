@@ -33,9 +33,9 @@ steps:
     group: testing
     commands:
       - npm run build
-     when:
-      branch: master
-      event: pull_request
+    when:
+     branch: master
+     event: pull_request
 
 #   - name: rebuild-cache
 #     image: drillster/drone-volume-cache
