@@ -47,7 +47,3 @@ steps:
     when:
       branch: master
       event: pull_request
-
-volumes:
-  - name: cache
-    path: /tmp/cache
