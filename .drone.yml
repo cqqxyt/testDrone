@@ -34,7 +34,7 @@ steps:
     commands:
       - npm run build
       
-  - name: build
+  - name: build1
     image: node:16
     group: testing
     commands:
