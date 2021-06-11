@@ -16,7 +16,7 @@ steps:
     commands:
       - node -v
       - npm -v
-      - npm config set cache .npm-cache
+      - npm config set cache cache
       - npm install 
       
   - name: lint
@@ -40,11 +40,6 @@ steps:
       rebuild: true
       mount:
         - ./node_modules
-        
-  volumes:
-    - name: cache
-      host: 
-        path: /tmp/cache
       
     when:
       branch: master
