@@ -4,7 +4,7 @@ steps:
   - name: restore-cache
     image: drillster/drone-volume-cache
     volumes:
-      - /tmp/chahe/:cache
+      - /tmp/cache/:cache
     settings:
      restore: true
      mount:
