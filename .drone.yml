@@ -34,7 +34,11 @@ steps:
     commands:
       - npm run build
       
-  - name: pull_request
+  - name: build
+    image: node:16
+    group: testing
+    commands:
+      - npm run build
     when:
       branch: master
       event: pull_request
