@@ -24,11 +24,17 @@ steps:
     commands:
       - npm run lint
 
-  - name: testing
+  - name: unit test
     image: node:16
     group: testing
     commands:
       - npm run test 
+      
+  - name: build
+    image: node:16
+    group: testing
+    commands:
+      - npm run build  
       
   - name: rebuild-cache
     image: drillster/drone-volume-cache
@@ -42,4 +48,4 @@ steps:
       
     when:
       branch: master
-      event: push
+      event: [push,pull_request]
