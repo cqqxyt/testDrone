@@ -1,31 +1,47 @@
-kind: pipeline
-name: api
-steps:
-  # api unit test
-  - name: run lint
-    image: node:16
-    depends_on: [clone]
+pipeline:
+ restore-cache:
+   image: drillster/drone-volume-cache
+   restore: true
+   mount:
+    - ./.npm-chahe
+    - ./node_modules
+   volumes:
+    - /tmp/chahe/:cache
+
+ install:
+   image: node:16
+   commands:
+     - node -v
+     - npm -v
+     - npm config set cache .npm-cache
+     - npm install 
+
+  lint:
+   image: node:16
+    group: testing
     commands:
-      - npm ci
       - npm run lint
-    when:
-      branch: master
-      event: push
 
-  - name: run test
+   testing:
     image: node:16
-    depends_on: [clone]
+    group: testing
     commands:
-      - npm run test
-    when:
-      branch: master
-      event: push
+      - npm run test   
 
-  - name: run build
+ build:
     image: node:16
-    depends_on: [clone]
+    group: testing
     commands:
       - npm run build
+
+ rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - ./.npm-cache
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
     when:
       branch: master
-      event: push
+
