@@ -1,13 +1,53 @@
 kind: pipeline
-name: api
+name: drone-server
 steps:
-  # api unit test
-  - name: test2
+  - name: restore-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      restore: true
+      mount:
+        - ./node_modules
+
+  - name: install
     image: node:16
-    depends_on: [clone]
     commands:
-      - npm install
+      - npm ci
+
+  - name: lint
+    image: node:16
+    group: testing
+    commands:
+      - npm run lint
+
+  - name: unit test
+    image: node:16
+    group: testing
+    commands:
       - npm run test
+
+  - name: build
+    image: node:16
+    group: testing
+    commands:
+      - npm run build
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      rebuild: true
+      mount:
+        - ./node_modules
+
     when:
       branch: master
-      event: push
+      event: pull_request
+
+volumes:
+  - name: cache
+    path: /tmp/cache
