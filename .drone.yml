@@ -2,14 +2,14 @@ kind: pipeline
 name: drone-server
 steps:
   - name: restore-cache
-     image: meltwater/drone-cache
-     volumes:
-       - /tmp/chahe/:cache
-     settings:
-      restore: true
-      mount:
-       - ./.npm-cache
-       - ./node_modules
+    image: drillster/drone-volume-cache
+    volumes:
+      - /tmp/chahe/:cache
+    settings:
+     restore: true
+     mount:
+      - ./.npm-cache
+      - ./node_modules
        
   - name: install
     image: node:16
