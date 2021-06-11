@@ -16,7 +16,6 @@ steps:
     commands:
       - node -v
       - npm -v
-      - npm config set cache cache
       - npm install 
       
   - name: lint
