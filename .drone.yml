@@ -33,14 +33,8 @@ steps:
     group: testing
     commands:
       - npm run build
-      
-  - name: build1
-    image: node:16
-    group: testing
-    commands:
-      - npm run build
+
     when:
-      branch: master
       event: pull_request
 
 #   - name: rebuild-cache
