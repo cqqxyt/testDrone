@@ -48,56 +48,6 @@ steps:
       branch: master
       event: pull_request
       
-  kind: pipeline
-name: drone-server
-steps:
-  - name: restore-cache
-    image: drillster/drone-volume-cache
-    volumes:
-    - name: cache
-      path: /cache
-    settings:
-      restore: true
-      mount:
-        - ./node_modules
-       
-  - name: install
-    image: node:16
-    commands:
-      - npm ci 
-      
-  - name: lint
-    image: node:16
-    group: testing
-    commands:
-      - npm run lint
-
-  - name: unit test
-    image: node:16
-    group: testing
-    commands:
-      - npm run test 
-      
-  - name: build
-    image: node:16
-    group: testing
-    commands:
-      - npm run build  
-      
-  - name: rebuild-cache
-    image: drillster/drone-volume-cache
-    volumes:
-    - name: cache
-      path: /cache
-    settings:
-      rebuild: true
-      mount:
-        - ./node_modules
-
-    when:
-      branch: master
-      event: pull_request
-      
 volumes:
   - name: cache
     path: /tmp/cache
