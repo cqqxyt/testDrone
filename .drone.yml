@@ -31,6 +31,21 @@ steps:
     commands:
       - npm run test 
       
+ - name: rebuild-cache
+  image: drillster/drone-volume-cache
+  volumes:
+  - name: cache
+    path: /cache
+  settings:
+    rebuild: true
+    mount:
+      - ./node_modules
+
+volumes:
+  - name: cache
+    host: 
+      path: /tmp/cache
+      
     when:
       branch: master
       event: push
