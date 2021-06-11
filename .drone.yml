@@ -44,10 +44,6 @@ steps:
       mount:
         - ./node_modules
 
-volumes:
-  - name: cache
-    path: /tmp/cache
-      
     when:
       branch: master
       event: pull_request
