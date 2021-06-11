@@ -34,7 +34,7 @@ steps:
     commands:
       - npm run build
 
-    when:
+    trigger:
       event: pull_request
 
 #   - name: rebuild-cache
