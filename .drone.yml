@@ -1,6 +1,15 @@
 kind: pipeline
-name: api
+name: drone-server
 steps:
+  - name: restore-cache
+     image: drillster/drone-volume-cache
+     restore: true
+     mount:
+       - ./.npm-chahe
+       - ./node_modules
+     volumes:
+       - /tmp/chahe/:cache
+       
   - name: install
     image: node:16
     commands:
