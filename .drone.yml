@@ -32,7 +32,9 @@ steps:
     image: node:16
     group: testing
     commands:
-      - npm run build      
+      - npm run build
+      
+  - name: pull_request
     when:
       branch: master
       event: pull_request
