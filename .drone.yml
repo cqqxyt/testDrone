@@ -1,40 +1,42 @@
-pipeline:
- restore-cache:
-   image: drillster/drone-volume-cache
-   restore: true
-   mount:
-    - ./.npm-chahe
-    - ./node_modules
-   volumes:
-    - /tmp/chahe/:cache
+kind: pipeline
+ name: drone-test
+  steps:
+   - name: restore-cache
+     image: drillster/drone-volume-cache
+     restore: true
+     mount:
+       - ./.npm-chahe
+       - ./node_modules
+     volumes:
+       - /tmp/chahe/:cache
 
- install:
-   image: node:16
-   commands:
-     - node -v
-     - npm -v
-     - npm config set cache .npm-cache
-     - npm install 
+  - name: install
+    image: node:16
+    commands:
+      - node -v
+      - npm -v
+      - npm config set cache .npm-cache
+      - npm install 
 
-  lint:
-   image: node:16
+  - name: lint
+    image: node:16
     group: testing
     commands:
       - npm run lint
 
-   testing:
+  - name: testing
     image: node:16
     group: testing
     commands:
       - npm run test   
 
- build:
+  - name: build
     image: node:16
     group: testing
     commands:
       - npm run build
 
- rebuild-cache:
+  - name: rebuild-cache
     image: drillster/drone-volume-cache
     rebuild: true
     mount:
