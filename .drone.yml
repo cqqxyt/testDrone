@@ -2,7 +2,7 @@ kind: pipeline
 name: api
 steps:
   # api unit test
-    - name: lint
+  - name: lint
     image: node:16
     group: testing
     commands:
