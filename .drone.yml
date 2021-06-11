@@ -5,7 +5,7 @@ steps:
      image: drillster/drone-volume-cache
      restore: true
      mount:
-       - ./.npm-chahe
+       - ./.npm-cache
        - ./node_modules
      volumes:
        - /tmp/chahe/:cache
