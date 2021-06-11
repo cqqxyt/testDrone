@@ -1,7 +1,14 @@
 kind: pipeline
 name: api
 steps:
-  # api unit test
+  - name: install
+    image: node:16
+    commands:
+      - node -v
+      - npm -v
+      - npm config set cache .npm-cache
+      - npm install 
+      
   - name: lint
     image: node:16
     group: testing
