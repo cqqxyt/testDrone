@@ -14,9 +14,7 @@ steps:
   - name: install
     image: node:16
     commands:
-      - node -v
-      - npm -v
-      - npm install 
+      - npm ci 
       
   - name: lint
     image: node:16
