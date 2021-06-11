@@ -43,6 +43,10 @@ steps:
       rebuild: true
       mount:
         - ./node_modules
+
+volumes:
+  - name: cache
+    path: /tmp/cache
       
     when:
       branch: master
