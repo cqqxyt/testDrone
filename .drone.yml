@@ -18,25 +18,21 @@ steps:
 
   - name: lint
     image: node:16
-    group: testing
     commands:
       - npm run lint
 
   - name: unit test
     image: node:16
-    group: testing
     commands:
       - npm run test
 
   - name: build
     image: node:16
-    group: testing
     commands:
       - npm run build
       
   - name: build1
     image: node:16
-    group: testing
     commands:
       - npm run build
     when:
