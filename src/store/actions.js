@@ -20,4 +20,4 @@ export default {
       return state.text;
     }
   }
-}
+};

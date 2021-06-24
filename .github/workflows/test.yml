@@ -24,27 +24,22 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
-      - name: print node version
+      - name: set ssh key
         run: |
-          node -v
-          npm -v
+          mkdir -p ~/.ssh/
+          echo "${{secrets.WFP_ID.RSA}}" > /.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan "47.100.198.40" >> ~/.ssh/known_hosts
+      - name: deploy
+        run: |
+          ssh work@47.100.198.40 "
+            cd /home/work/code/testDrone;
+            git remote add origin https://cqqxyt:${{secrets.WFP_ID.RSA}}github.com/testDrone.git;
+            git pull origin master;
+            git remote remove master;
 
-      - name: npm install
-        run: |
-          npm install
-
-      - name: check lint
-        run: |
-          npm run lint
-
-      - name: npm run test
-        run: |
-          npm run test
-
-      - name: build
-        run: |
-          npm run build
+            docker-compose build testdrone;
+            docker-compose up -d
+          "
+      - name: delete ssh key 
+        run: rm -rf ~/.ssh/id_rsa   

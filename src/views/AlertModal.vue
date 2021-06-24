@@ -11,7 +11,7 @@ export default {
   props: {
     visible: {
       type: Boolean,
-      default: false,
+      default: false
     },
     /**
      * 제목
@@ -20,7 +20,7 @@ export default {
       type: String,
       default() {
         return "";
-      },
+      }
     },
     /**
      * 내용
@@ -29,7 +29,7 @@ export default {
       type: String,
       default() {
         return "";
-      },
+      }
     },
     /**
      * 확인 버튼 레이블
@@ -38,19 +38,19 @@ export default {
       type: String,
       default() {
         return "확인";
-      },
+      }
     },
     /**
      * 확인 버튼 콜백
      */
     okClicked: {
       type: Function,
-      default: () => {},
+      default: () => {}
     },
     isForbidLockBody: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   methods: {
     /**
@@ -65,7 +65,7 @@ export default {
           this.okClicked();
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>

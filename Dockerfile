@@ -9,10 +9,8 @@ COPY package-lock.json package-lock.json
 RUN rm -rf node_modules
 RUN npm install
 RUN npm rebuild node-sass
+RUN npm install pm2 -g
 COPY . .
 # CMD [ "npm", "run", "test" ]
 
-FROM base as serve
-# RUN npm ci --production
-# COPY . .
-CMD [ "npm", "run" ,"serve" ]
+CMD npm run dev
