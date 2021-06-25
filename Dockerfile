@@ -1,4 +1,4 @@
-FROM node:16 as base
+FROM node:16
 
 WORKDIR /code
 
@@ -12,5 +12,9 @@ RUN npm rebuild node-sass
 RUN npm install pm2 -g
 COPY . .
 # CMD [ "npm", "run", "test" ]
+CMD npm run build
 
-CMD npm run dev
+FROM nginx
+COPY dist/ /usr/share/nginx/html/
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+

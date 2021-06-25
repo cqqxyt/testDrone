@@ -19,20 +19,21 @@
 #       - DRONE_SERVER_HOST=${DRONE_SERVER_HOST}
 #       - DRONE_SECRET_SECRET=${DRONE_RPC_SECRETS}
 
-version: '3'
+version: "2"
 services:
-   test-drone:
-     build:
+  testnginx:
+    build:
       context: .
       dockerfile: Dockerfile
-    image: test-drone
-    container_name: test-drone
+    image:
+      testnginx
+      # container_name: test-drone
     ports:
-       - 8081:3000
-    test-redis:
-      image: redis
-      container_name: test-redis
-      ports:
-         - 6378:6379
-      environment:
-         - TZ=Asia/shanghai
+      - 8081:8001
+  # test-redis:
+  #   image: redis
+  #  container-name: test-redis
+  # ports:
+  #   - 6378:6379
+  # environment:
+  #   - TZ=Asia/shanghai
