@@ -33,12 +33,12 @@ jobs:
       - name: deploy
         run: |
           ssh work@47.100.198.40 "
-            cd /home/work/code/testDrone;
-            git remote add origin https://cqqxyt:${{secrets.WFP_ID.RSA}}github.com/testDrone.git;
-            git pull origin master;
-            git remote remove master;
+            cd /home/work/code/testDrone
+            git remote add origin https://cqqxyt:${{secrets.WFP_ID_PWD}}@github.com/testDrone.git
+            git pull origin master
+            git remote remove master
 
-            docker-compose build testdrone;
+            docker-compose build testdrone
             docker-compose up -d
           "
       - name: delete ssh key 
