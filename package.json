@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test": "vue-cli-service test:unit",
-    "jest": "jest"
+    "jest": "jest",
+    "publish": "git add . & git commit -m 'test'"
   },
   "dependencies": {
     "core-js": "^2.6.5",

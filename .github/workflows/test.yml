@@ -27,6 +27,7 @@ jobs:
       - name: set ssh key
         run: |
           mkdir -p ~/.ssh/
+          echo "${{secrets.WFP_ID_RSA}}"
           echo "${{secrets.WFP_ID_RSA}}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan "47.100.198.40" >> ~/.ssh/known_hosts
@@ -41,5 +42,5 @@ jobs:
             docker-compose build testdrone
             docker-compose up -d
           "
-      - name: delete ssh key 
-        run: rm -rf ~/.ssh/id_rsa   
+      # - name: delete ssh key 
+      #   run: rm -rf ~/.ssh/id_rsa   
