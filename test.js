@@ -24,9 +24,7 @@ async function gitAdd(params) {
   });
   return Promise.resolve();
 }
-gitAdd(["add", "."]).then(() => {
-  gitAdd(["commit", "-m", "test"]);
-});
+
 async function gitRun() {
   const { msg } = await inquirer.prompt([
     {
@@ -36,9 +34,9 @@ async function gitRun() {
       default: "update files",
     },
   ]);
-
-  //   const test = spawnSync("git ", ["commit", "-m", msg, "--progres"]);
-  //   spawnSync("git ", ["push", "--progres"]);
+  gitAdd(["add", "."]).then(() => {
+    gitAdd(["commit", "-m", msg]);
+  });
 }
 
-// gitRun();
+gitRun();
