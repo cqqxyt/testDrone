@@ -34,9 +34,13 @@ async function gitRun() {
       default: "update files",
     },
   ]);
-  gitAdd(["add", "."]).then(() => {
-    gitAdd(["commit", "-m", msg]);
-  });
+  gitAdd(["add", "."])
+    .then(() => {
+      gitAdd(["commit", "-m", msg]);
+    })
+    .then(() => {
+      gitAdd(["push"]);
+    });
 }
 
 gitRun();
