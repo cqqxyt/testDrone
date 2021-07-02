@@ -41,7 +41,7 @@ async function excute(params, command = "git") {
     }
   });
   task.on("exit", (e) => {
-    console.log("成功");
+    console.log(params);
     process.exit(e);
     return Promise.resolve(e);
   });
