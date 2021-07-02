@@ -2,6 +2,25 @@ const inquirer = require("inquirer");
 const Git = require("git-rev-sync");
 const { spawn } = require("child_process");
 
+gitCommit();
+async function gitCommit() {
+  const msg = await gitCommitMsg();
+  try {
+    await gitExcute(msg);
+  } catch (e) {
+    console.log(e.code);
+    if (e.code === 128) {
+      await gitAdd(["rm", "-rf", ".git/index.lock"]);
+    }
+    await gitExcute(msg);
+  }
+}
+async function gitExcute(msg) {
+  await gitAdd(["add", "."]);
+  await gitAdd(["commit", "-m", msg]);
+  await gitAdd(["push", "--set-upstream", "origin", Git.branch()]);
+}
+
 async function gitAdd(params) {
   const task = spawn("git", params, {
     cwd: process.cwd(),
@@ -16,18 +35,18 @@ async function gitAdd(params) {
   }
   task.on("close", (code) => {
     if (code) {
-      console.log(code);
+      console.log(e.code);
       const e = new Error("command execute failed");
       e.code = code;
-      return Promise.reject(e);
+      throw new Error(e);
+      // return Promise.reject(e);
     }
     return Promise.resolve(code);
   });
 
   return Promise.resolve();
 }
-
-async function gitRun() {
+async function gitCommitMsg() {
   const { msg } = await inquirer.prompt([
     {
       type: "input",
@@ -36,18 +55,5 @@ async function gitRun() {
       default: "update files",
     },
   ]);
-  gitAdd(["add", "."])
-    .then(() => {
-      gitAdd(["commit", "-m", msg]);
-    })
-    .then(() => {
-      gitAdd(["push", "--set-upstream", "origin", Git.branch()]);
-    })
-    .catch((e) => {
-      if (e.code === 128) {
-        gitAdd(["rm", "-rf", ".git/index.lock"]);
-      }
-    });
+  return msg;
 }
-
-gitRun();
