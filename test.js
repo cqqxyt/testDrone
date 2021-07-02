@@ -12,7 +12,7 @@ async function gitCommit() {
     if (e.code === 128) {
       await spawn([".git/index.lock"], "rm");
     }
-    await gitExcute();
+    await gitExcute(msg);
   }
 }
 async function gitExcute(msg) {
