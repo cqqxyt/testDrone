@@ -34,7 +34,6 @@ async function excute(params, command = "git") {
   }
 
   if (task.stderr) {
-    console.log(2);
     task.stderr.pipe(process.stdout);
   }
   task.on("close", (code) => {
