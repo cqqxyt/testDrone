@@ -29,7 +29,6 @@ async function excute(params, command = "git") {
   });
   console.log(task);
   if (task.stdout) {
-    console.log(1);
     task.stdout.pipe(process.stdout);
   }
 
