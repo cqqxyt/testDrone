@@ -24,7 +24,7 @@ async function gitExcute(msg) {
 
 async function excute(params, command = "git") {
   return new Promise((resolve) => {
-    const spinner = ora("Loading unicorns").start();
+    const spinner = ora(params.join(" ")).start();
     const task = spawn(command, params, {
       cwd: process.cwd(),
       stdio: "inherit",
