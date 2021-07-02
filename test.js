@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const Git = require("git-rev-sync");
 const execa = require("execa");
 const { spawn } = require("child_process");
-console.log(Git.branch());
+
 async function gitAdd(params) {
   const task = spawn("git", params, {
     cwd: process.cwd(),
