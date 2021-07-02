@@ -10,21 +10,19 @@ async function gitCommit() {
   } catch (e) {
     console.log(e.code);
     if (e.code === 128) {
-      const ls = spawn(["rm", ".git/index.lock"]);
-      console.log(ls);
-      await ls;
+      await spawn([".git/index.lock"], "rm");
     }
     await gitExcute(msg);
   }
 }
 async function gitExcute(msg) {
-  await gitAdd(["add", "."]);
-  await gitAdd(["commit", "-m", msg]);
-  await gitAdd(["push", "--set-upstream", "origin", Git.branch()]);
+  await excute(["add", "."]);
+  await excute(["commit", "-m", msg]);
+  await excute(["push", "--set-upstream", "origin", Git.branch()]);
 }
 
-async function gitAdd(params) {
-  const task = spawn("git", params, {
+async function excute(params, command = "git") {
+  const task = spawn(command, params, {
     cwd: process.cwd(),
     stdio: "inherit",
   });
