@@ -39,7 +39,6 @@ async function gitAdd(params) {
       const e = new Error("command execute failed");
       e.code = code;
       throw new Error(e);
-      // return Promise.reject(e);
     }
     return Promise.resolve(code);
   });
