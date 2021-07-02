@@ -1,7 +1,9 @@
 const inquirer = require("inquirer");
+/* eslint-disable @typescript-eslint/no-var-requires */
+const Git = require("git-rev-sync");
 const execa = require("execa");
 const { spawn } = require("child_process");
-
+console.log(Git.branch());
 async function gitAdd(params) {
   const task = spawn("git", params, {
     cwd: process.cwd(),
@@ -39,7 +41,7 @@ async function gitRun() {
       gitAdd(["commit", "-m", msg]);
     })
     .then(() => {
-      gitAdd(["push"]);
+      gitAdd(["push", "origin", Git.branch()]);
     });
 }
 
