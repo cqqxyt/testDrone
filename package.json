@@ -33,7 +33,9 @@
     "execa": "^5.1.1",
     "git-rev-sync": "^3.0.1",
     "inquirer": "^8.1.1",
+    "ora": "^5.4.1",
     "sass-loader": "^7.1.0",
+    "spinner": "^0.3.4",
     "vue-template-compiler": "^2.6.10"
   }
 }

@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const Git = require("git-rev-sync");
 const { spawn } = require("child_process");
+const ora = require("ora");
 
 (async function publish() {
   const msg = await gitCommitMsg();
@@ -23,6 +24,7 @@ async function gitExcute(msg) {
 
 async function excute(params, command = "git") {
   return new Promise((resolve) => {
+    ora(params).start();
     const task = spawn(command, params, {
       cwd: process.cwd(),
       stdio: "inherit",
