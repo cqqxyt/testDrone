@@ -39,7 +39,6 @@ async function excute(params, command = "git") {
       });
     }
     task.on("close", (code) => {
-      console.log("close");
       if (code) {
         const e = new Error("command execute failed");
         e.code = code;
@@ -47,7 +46,6 @@ async function excute(params, command = "git") {
       }
     });
     task.on("exit", (e) => {
-      console.log(params);
       resolve(e);
     });
   });
