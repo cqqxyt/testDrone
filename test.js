@@ -26,6 +26,7 @@ async function excute(params, command = "git") {
     cwd: process.cwd(),
     stdio: "inherit",
   });
+  console.log(task);
   if (task.stdout) {
     console.log(1);
     task.stdout.pipe(process.stdout);
