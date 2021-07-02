@@ -2,7 +2,7 @@ const inquirer = require("inquirer");
 /* eslint-disable @typescript-eslint/no-var-requires */
 const Git = require("git-rev-sync");
 const { spawn } = require("child_process");
-
+console.log(2);
 async function gitAdd(params) {
   const task = spawn("git", params, {
     cwd: process.cwd(),
@@ -21,11 +21,13 @@ async function gitAdd(params) {
       e.code = code;
       return Promise.reject(e);
     }
-    return Promise.resolve();
+    return Promise.resolve(code);
   });
   return Promise.resolve();
 }
-
+// gitAdd(["config", "--list"]).then((a) => {
+//   console.log(a["core.filemode"]);
+// });
 async function gitRun() {
   const { msg } = await inquirer.prompt([
     {
@@ -41,6 +43,9 @@ async function gitRun() {
     })
     .then(() => {
       gitAdd(["push", "origin", Git.branch()]);
+    })
+    .catch((e) => {
+      console.log(e);
     });
 }
 
