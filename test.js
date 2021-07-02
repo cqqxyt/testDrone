@@ -20,7 +20,7 @@ async function gitCommit() {
 async function gitExcute(msg) {
   await gitAdd(["add", "."]);
   await gitAdd(["commit", "-m", msg]);
-  // await gitAdd(["push", "--set-upstream", "origin", Git.branch()]);
+  await gitAdd(["push", "--set-upstream", "origin", Git.branch()]);
 }
 
 async function gitAdd(params) {
