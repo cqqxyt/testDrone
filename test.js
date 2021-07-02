@@ -10,7 +10,9 @@ async function gitCommit() {
   } catch (e) {
     console.log(e.code);
     if (e.code === 128) {
-      await gitAdd(["rm", "-rf", ".git/index.lock"]);
+      const ls = spawn(["rm", ".git/index.lock"]);
+      console.log(ls);
+      await ls;
     }
     await gitExcute(msg);
   }
@@ -18,7 +20,7 @@ async function gitCommit() {
 async function gitExcute(msg) {
   await gitAdd(["add", "."]);
   await gitAdd(["commit", "-m", msg]);
-  await gitAdd(["push", "--set-upstream", "origin", Git.branch()]);
+  // await gitAdd(["push", "--set-upstream", "origin", Git.branch()]);
 }
 
 async function gitAdd(params) {
@@ -35,15 +37,16 @@ async function gitAdd(params) {
   }
   task.on("close", (code) => {
     if (code) {
-      console.log(e.code);
       const e = new Error("command execute failed");
       e.code = code;
       throw new Error(e);
     }
-    return Promise.resolve(code);
   });
-
-  return Promise.resolve();
+  task.on("exit", (e) => {
+    console.log("成功");
+    process.exit(e);
+    return Promise.resolve(e);
+  });
 }
 async function gitCommitMsg() {
   const { msg } = await inquirer.prompt([
