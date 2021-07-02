@@ -1,7 +1,6 @@
 const inquirer = require("inquirer");
 /* eslint-disable @typescript-eslint/no-var-requires */
 const Git = require("git-rev-sync");
-const execa = require("execa");
 const { spawn } = require("child_process");
 
 async function gitAdd(params) {
