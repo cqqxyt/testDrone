@@ -45,11 +45,9 @@ async function excute(params, command = "git") {
         e.code = code;
         throw new Error(e);
       }
-      // process.exit(0);
     });
     task.on("exit", (e) => {
       console.log(params);
-      // process.exit(e);
       resolve(e);
     });
   });
