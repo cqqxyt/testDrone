@@ -29,11 +29,15 @@ async function excute(params, command = "git") {
   });
   console.log(task);
   if (task.stdout) {
-    task.stdout.pipe(process.stdout);
+    task.stdout.on("data", (data) => {
+      console.log(`stdout: ${data}`);
+    });
   }
 
   if (task.stderr) {
-    task.stderr.pipe(process.stdout);
+    task.stderr.on("data", (data) => {
+      console.error(`stderr: ${data}`);
+    });
   }
   task.on("close", (code) => {
     console.log("close");
