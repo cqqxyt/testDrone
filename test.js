@@ -2,7 +2,7 @@ const inquirer = require("inquirer");
 const Git = require("git-rev-sync");
 const { spawn } = require("child_process");
 const ora = require("ora");
-
+const chalk = require("chalk");
 (async function publish() {
   const msg = await gitCommitMsg();
   try {
@@ -24,7 +24,7 @@ async function gitExcute(msg) {
 
 async function excute(params, command = "git") {
   return new Promise((resolve) => {
-    const spinner = ora(params.join(" ")).start();
+    const spinner = ora(chalk.yellow(params.join(" "))).start();
     const task = spawn(command, params, {
       cwd: process.cwd(),
       stdio: "inherit",
