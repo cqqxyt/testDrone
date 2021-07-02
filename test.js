@@ -44,8 +44,6 @@ async function gitRun() {
       gitAdd(["push", "--set-upstream", "origin", Git.branch()]);
     })
     .catch((e) => {
-      console.log(1212);
-      console.log(e);
       if (e.code === 128) {
         gitAdd(["rm", "-rf", ".git/index.lock"]);
       }
