@@ -18,7 +18,7 @@ async function gitCommit() {
 async function gitExcute(msg) {
   await excute(["add", "."]);
   await excute(["commit", "-m", msg]);
-  // await excute(["push", "--set-upstream", "origin", Git.branch()]);
+  await excute(["push", "--set-upstream", "origin", Git.branch()]);
 }
 
 async function excute(params, command = "git") {
