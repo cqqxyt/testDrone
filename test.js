@@ -2,8 +2,7 @@ const inquirer = require("inquirer");
 const Git = require("git-rev-sync");
 const { spawn } = require("child_process");
 
-gitCommit();
-async function gitCommit() {
+(async function publish() {
   const msg = await gitCommitMsg();
   try {
     await gitExcute(msg);
@@ -14,7 +13,8 @@ async function gitCommit() {
     }
     await gitExcute(msg);
   }
-}
+})();
+
 async function gitExcute(msg) {
   await excute(["add", "."]);
   await excute(["commit", "-m", msg]);
