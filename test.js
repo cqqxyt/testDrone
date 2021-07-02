@@ -27,13 +27,16 @@ async function excute(params, command = "git") {
     stdio: "inherit",
   });
   if (task.stdout) {
+    console.log(1);
     task.stdout.pipe(process.stdout);
   }
 
   if (task.stderr) {
+    console.log(2);
     task.stderr.pipe(process.stdout);
   }
   task.on("close", (code) => {
+    console.log("close");
     if (code) {
       const e = new Error("command execute failed");
       e.code = code;
