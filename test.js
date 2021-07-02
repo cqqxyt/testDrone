@@ -1,5 +1,4 @@
 const inquirer = require("inquirer");
-/* eslint-disable @typescript-eslint/no-var-requires */
 const Git = require("git-rev-sync");
 const { spawn } = require("child_process");
 
@@ -17,17 +16,17 @@ async function gitAdd(params) {
   }
   task.on("close", (code) => {
     if (code) {
+      console.log(code);
       const e = new Error("command execute failed");
       e.code = code;
       return Promise.reject(e);
     }
     return Promise.resolve(code);
   });
+
   return Promise.resolve();
 }
-// gitAdd(["config", "--list"]).then((a) => {
-//   console.log(a["core.filemode"]);
-// });
+
 async function gitRun() {
   const { msg } = await inquirer.prompt([
     {
@@ -42,10 +41,14 @@ async function gitRun() {
       gitAdd(["commit", "-m", msg]);
     })
     .then(() => {
-      gitAdd(["push", "origin", Git.branch()]);
+      gitAdd(["push", "--set-upstream", "origin", Git.branch()]);
     })
     .catch((e) => {
+      console.log(1212);
       console.log(e);
+      if (e.code === 128) {
+        gitAdd(["rm", "-rf", ".git/index.lock"]);
+      }
     });
 }
 
