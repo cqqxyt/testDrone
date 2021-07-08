@@ -315,7 +315,19 @@ class Compile {
 }
 function parseHTML(html) {
   var index = 0;
+  //   while (html) {
   const start = parseStartMatch();
+
+  const tag = html.match(defaultTagRE);
+  if (tag) {
+    advance(tag[0].length);
+  }
+  const end = html.match(endTag);
+  if (end) {
+    advance(end[0].length);
+  }
+  console.log(html);
+  //   }
 
   function advance(n) {
     index += n;
@@ -353,7 +365,7 @@ function parseHTML(html) {
 class Watcher {}
 
 class Dep {}
-const templates = "<template id='test'><div>{{title}}</div><template>";
+const templates = "<template id='test'><div>{{title}}</div></template>";
 const app = new Vue1({
   el: "#test",
   data() {
