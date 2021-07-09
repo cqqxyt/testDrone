@@ -257,7 +257,6 @@ class Observer {
         enumerable: true, // 可枚举
         configurable: true, // 可修改
         set(value) {
-          console.log("set");
           if (v === value) return;
           observe(value);
           v = value;
@@ -313,26 +312,89 @@ class Compile {
     parseHTML(template);
   }
 }
-function parseHTML(html) {
-  var index = 0;
-  //   while (html) {
-  const start = parseStartMatch();
 
-  const tag = html.match(defaultTagRE);
-  if (tag) {
-    advance(tag[0].length);
+function createAst(tagName, attrs) {
+  return {
+    tag: tagName,
+    type: 1,
+    children: [],
+    parent: null,
+    attrs: attrs,
+  };
+}
+
+let root,
+  currentParent,
+  stack = [];
+//[div]
+function handleStart(tag) {
+  const node = createAst(tag.tagName, tag.attrs);
+  //   console.log(node);
+  if (!root) {
+    root = node;
   }
-  const end = html.match(endTag);
-  if (end) {
-    advance(end[0].length);
+  currentParent = node;
+  stack.push(node);
+}
+
+function handleEnd(tag) {
+  let element = stack.pop();
+  currentParent = stack[stack.length - 1];
+  if (currentParent) {
+    element.parent = currentParent;
+    currentParent.children.push(element);
   }
-  console.log(html);
-  //   }
+}
+function chars(text) {
+  if (!text) {
+    return;
+  }
+  text = text.replace(/\s/g, "");
+  const node = {
+    type: 3,
+    text,
+  };
+  currentParent.children.push(node);
+}
+
+function parseHTML(html) {
+  // "   <template id='test'>testtest<div>{{title}}</div></template>"
+  var index = 0;
+  while (html) {
+    let textEnd = html.indexOf("<");
+    if (textEnd === 0) {
+      const start = parseStartMatch();
+      if (start) {
+        handleStart(start);
+        continue;
+      }
+
+      const end = html.match(endTag);
+      if (end) {
+        handleEnd(end);
+        advance(end[0].length);
+        continue;
+      }
+    }
+
+    let text;
+    if (textEnd >= 0) {
+      text = html.substring(0, textEnd);
+      chars(text);
+      advance(text.length);
+    }
+    if (textEnd < 0) {
+      text = html;
+    }
+  }
+
+  console.log(root);
 
   function advance(n) {
     index += n;
     html = html.substring(n);
   }
+
   function parseStartMatch() {
     const start = html.match(startTagOpen);
     if (start) {
@@ -349,9 +411,11 @@ function parseHTML(html) {
       ) {
         attr.start = index;
         advance(attr[0].length);
-        console.log(attr);
         attr.end = index;
-        match.attrs.push(attr);
+        match.attrs.push({
+          name: attr[1],
+          value: attr[3] || attr[4] || attr[5],
+        });
       }
       if (close) {
         advance(close[0].length);
@@ -365,7 +429,8 @@ function parseHTML(html) {
 class Watcher {}
 
 class Dep {}
-const templates = "<template id='test'><div>{{title}}</div></template>";
+const templates =
+  "<template id='test'>testtest<div style='color:red'>{{title}}</div></template>";
 const app = new Vue1({
   el: "#test",
   data() {
