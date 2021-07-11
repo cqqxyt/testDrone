@@ -1,9 +1,17 @@
-import Vue from "vue";
-import Actions from "./views/Actions";
-import store from "./store";
+// import Vue from "vue";
+// import Actions from "./views/Actions";
+import Vue from "./vue";
+const templates =
+  "<template id='test' style='color:red;font-size:16px;'>testtest<div style='color:red'>{{title}} aa bb {{message}}</div></template>";
 
-Vue.config.productionTip = false;
 new Vue({
-  store,
-  render: (h) => h(Actions),
+  data() {
+    return {
+      message: [1, 2],
+      title: "Hello Vue",
+      a: { b: 2 },
+    };
+  },
+  template: templates,
+  // render: (h) => h(Actions),
 }).$mount("#app");

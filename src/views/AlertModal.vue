@@ -1,5 +1,6 @@
 <template>
-  <div class="ly_popup">
+  <div class="ly_popup" v-bind="$attrs">
+    1212
     <strong v-if="title" class="na-ly_popup__text" v-html="secureTitle" />
     <span class="text" v-html="msg" />
   </div>
@@ -7,8 +8,13 @@
 
 <script>
 export default {
+  inheritAttrs:false,
   name: "AlertModal",
   props: {
+    name:{
+      type:String,
+      default:'1'
+    },
     visible: {
       type: Boolean,
       default: false
@@ -52,7 +58,18 @@ export default {
       default: true
     }
   },
+  mounted(){
+    this.$listeners.lis()
+  },
+  computed:{
+    test(){
+      console.log(1212)
+    }
+  },
   methods: {
+    test1(){
+ console.log(1212)
+    },
     /**
      * 모달 닫기
      */
