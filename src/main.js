@@ -1,10 +1,12 @@
 // import Vue from "vue";
 // import Actions from "./views/Actions";
 import Vue from "./vue";
+// import Vue from "./vueO.js";
 const templates =
-  "<template id='test' style='color:red;font-size:16px;'>testtest<div style='color:red'>{{title}} aa bb {{message}}</div></template>";
+  "<div id='test' style='color:red;font-size:16px;'>testtest111<div style='color:red'>{{title}}111 aa bb {{message}}  {{a.b}} </div></div>";
 
-new Vue({
+const app = new Vue({
+  el: "#app",
   data() {
     return {
       message: [1, 2],
@@ -14,4 +16,6 @@ new Vue({
   },
   template: templates,
   // render: (h) => h(Actions),
-}).$mount("#app");
+}); //.$mount("#app");
+
+console.log(app);

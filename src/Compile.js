@@ -1,6 +1,4 @@
-
-
-import generate from './generate'
+import generate from "./generate";
 export const unicodeRegExp = /a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD/;
 
 // Regular Expressions for parsing tags and attributes
@@ -12,21 +10,43 @@ const startTagOpen = new RegExp(`^<${qnameCapture}`);
 const startTagClose = /^\s*(\/?)>/;
 const endTag = new RegExp(`^<\\/${qnameCapture}[^>]*>`);
 const doctype = /^<!DOCTYPE [^>]+>/i;
+const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g;
 // #7298: escape - to avoid being passed as HTML comment when inlined in page
 const comment = /^<!\--/;
 const conditionalComment = /^<!\[/;
 
 const regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g;
+
 class Compile {
-  constructor(template, data) {
-    this.compileToFunctions(template);
+  constructor(template) {
+    const render = this.compileToFunctions(template);
+    return render;
   }
   compileToFunctions(template) {
     const templateNode = parseHTML(template);
-    generate(templateNode)
-    return templateNode
+    const code = generate(templateNode);
+    const render = `with(this){return ${code}}`;
+    const fn = new Function(render);
+    return fn;
   }
 }
+
+// _c('template',
+// {"id":"test","style":"{color:red;font-size:16px;}"},
+// _v("testtest"}),
+// _c('div',{"style":"{color:red}"},_v(_s(title)+"aabb"+_s(message)+_s(a.b)})))
+
+// function excute(fn) {
+//   with (this) {
+//     fn(arguments);
+//   }
+// }
+
+// function test(...args) {
+//   console.log(args);
+// }
+// const data = { a: 1 };
+// excute.call(test, { data });
 
 function createAst(tagName, attrs) {
   return {
@@ -64,7 +84,9 @@ function chars(text) {
   if (!text) {
     return;
   }
-  text = text.replace(/\s/g, "");
+  // if (defaultTagRE.test(text)) {
+  //   text = text.replace(/\s/g, "");
+  // }
   const node = {
     type: 3,
     text,
@@ -138,7 +160,7 @@ function parseHTML(html) {
     }
   }
 
-  return root
+  return root;
 }
 
-export default Compile
+export default Compile;
