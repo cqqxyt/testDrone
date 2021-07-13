@@ -1,5 +1,8 @@
 import observe from "./observe";
 import Compile from "./Compile";
+import Watcher from "./watcher";
+import { nextTick } from "./util";
+
 function proxy(target, sourceKey, key) {
   Object.defineProperty(target, key, {
     get() {
@@ -10,16 +13,32 @@ function proxy(target, sourceKey, key) {
     },
   });
 }
+
+function mountComponent(vm){
+  let updateComponent = function(){
+    vm._update(vm._render())
+  }
+
+  new Watcher(vm,updateComponent)
+}
 class Vue {
   constructor(options) {
     const vm = this;
     vm.$options = options;
+    this.$options.$el = document.querySelector(options.el)
+    this.$nextTick = nextTick
     this.initState(vm);
-    const render = new Compile(options.template);
-    this.$options.render = render;
-    const vnode = render.call(vm);
-    this.createRealElement(options.el, vnode);
+    mountComponent(vm)
     return vm;
+  }
+  _update(vnode){
+   this.$options.$el = this.patch(this.$options.$el,vnode) 
+  }
+
+  _render(){
+    const render = new Compile(this.$options.template);
+    const vnode =  render.call(this);
+    return vnode
   }
   initState(vm) {
     var data = vm.$options.data;
@@ -30,9 +49,22 @@ class Vue {
     for (let key in data) {
       proxy(vm, "_data", key);
     }
-    observe(vm);
+    observe(vm._data);
   }
-
+   patch(oldDom, vnode) {
+     console.log('patch')
+     console.log(oldDom,oldDom.nodeType)
+    let dom;
+    if (oldDom.nodeType) {
+    const parent = oldDom.parentNode;
+      dom = this.createDom(vnode);
+      parent.insertBefore(dom, oldDom.nextSiblings);
+      parent.removeChild(oldDom);
+    }else{
+      //diff
+    }
+    return dom;
+  }
   createRealElement(el, vnode) {
     var oldDom = document.querySelector(el);
     const parent = oldDom.parentNode;
@@ -40,14 +72,7 @@ class Vue {
     parent.insertBefore(dom, oldDom.nextSiblings);
     parent.removeChild(oldDom);
   }
-  patch(oldDom, vnode) {
-    console.log(oldDom.nodeType);
-    let root;
-    if (oldDom.nodeType) {
-      root = this.createDom(vnode);
-    }
-    return root;
-  }
+  
   createDom(node) {
     let { tag, children, text, data } = node;
     if (typeof tag === "string") {
@@ -77,9 +102,11 @@ class Vue {
   }
 
   _s(text) {
-    return typeof text === "string" ? text : JSON.stringify(text);
+    const text1 =  typeof text === "string" ? text : JSON.stringify(text);
+    return text1
   }
 }
+
 
 function createElement(tag, data = {}, ...children) {
   return VNode(tag, data, children);

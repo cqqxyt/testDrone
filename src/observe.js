@@ -1,3 +1,4 @@
+import Dep from "./dep";
 const oldArrMethods = Array.prototype;
 const arrMethods = Object.create(oldArrMethods);
 const conMe = ["push", "pop", "splice"];
@@ -12,11 +13,24 @@ conMe.forEach(function(fn) {
         break;
     }
     oldArrMethods[fn].apply(this, args);
+    this.__ob__.dep.notify()
   };
 });
 
+
+function dependArray(arr){
+  arr.forEach(v=>{
+    if(v){
+      v.__ob__ &&v.__ob__.dep.depend()
+      if(Array.isArray(v)){
+        dependArray(v)
+      }
+    }
+  })
+}
 class Observer {
   constructor(dataObj) {
+    this.dep = new Dep()
     Object.defineProperty(dataObj, "__ob__", {
       value: this,
       configurable: false,
@@ -31,13 +45,14 @@ class Observer {
   }
   listenArr(arr) {
     arr.forEach((item) => {
-      observe(item);
+       observe(item);
     });
   }
   listenObj(dataObj) {
     for (let key in dataObj) {
       let v = dataObj[key];
-      observe(v);
+      const childObj = observe(v);
+      let dep = new Dep()
       Object.defineProperty(dataObj, key, {
         enumerable: true, // 可枚举
         configurable: true, // 可修改
@@ -45,8 +60,18 @@ class Observer {
           if (v === value) return;
           observe(value);
           v = value;
+          dep.notify()
         },
         get() {
+          if(Dep.target){
+            dep.depend()
+            if(childObj){
+              childObj.dep.depend()
+              if(Array.isArray(v)){
+                dependArray(v)
+              }
+            }
+          }
           return v;
         },
       });
