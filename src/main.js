@@ -3,17 +3,17 @@
 import Vue from "./vue";
 // import Vue from "./vueO.js";
 // 创建构造器
-// var Profile = Vue.extend({
-//   template: "<p>{{firstName}} {{lastName}} aka {{alias}}</p>",
-//   data: function() {
-//     return {
-//       firstName: "Walter",
-//       lastName: "White",
-//       alias: "Heisenberg",
-//     };
-//   },
-// });
-// console.log(new Profile());
+var Profile = Vue.extend({
+  template: "<p>{{firstName}} {{lastName}} aka {{alias}}</p>",
+  data: function() {
+    return {
+      firstName: "Walter",
+      lastName: "White",
+      alias: "Heisenberg",
+    };
+  },
+});
+console.log(new Profile());
 // new Profile().$mount("#test");
 const templates =
   "<div id='templates' style='color:red;font-size:16px;'>testtest111<div style='color:red'>{{title}}  {{title}}  111 aa bb {{message[0].name}} {{message}}</div></div>";
@@ -96,24 +96,3 @@ setTimeout(() => {
   //   console.log(document.querySelector("#templates").innerHTML)
   // })
 }, 1000);
-
-class Parent {
-  constructor() {
-    this.name = 1;
-  }
-
-  test() {
-    console.log(123);
-  }
-}
-
-class child extends Parent {
-  constructor() {
-    super();
-  }
-  t() {
-    this.test();
-  }
-}
-
-new child().test();

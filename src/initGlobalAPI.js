@@ -13,10 +13,9 @@ export function initGlobalAPI(vm) {
       this._init(options);
     };
     Sub.prototype = Object.create(Super.prototype);
-    console.log("Sub.constructor", Sub.prototype.constructor);
+    Sub.prototype.constructor = Sub;
     Sub.extend = Super.extend;
     Sub.options = mergeOptions(Super.options, options);
-    console.log(Sub);
     return Sub;
   };
 }
