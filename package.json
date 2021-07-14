@@ -16,6 +16,9 @@
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
   },
+  "browser": {
+    "vue": "vue.common.js"
+  },
   "devDependencies": {
     "@testing-library/vue": "^4.1.0",
     "@vue/cli-plugin-babel": "^3.8.0",

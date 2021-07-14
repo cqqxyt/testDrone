@@ -1,33 +1,119 @@
-// import Vue from "vue";
+// import Vue from "./vue.esm.browser";
 // import Actions from "./views/Actions";
 import Vue from "./vue";
 // import Vue from "./vueO.js";
+// 创建构造器
+// var Profile = Vue.extend({
+//   template: "<p>{{firstName}} {{lastName}} aka {{alias}}</p>",
+//   data: function() {
+//     return {
+//       firstName: "Walter",
+//       lastName: "White",
+//       alias: "Heisenberg",
+//     };
+//   },
+// });
+// console.log(new Profile());
+// new Profile().$mount("#test");
 const templates =
-  "<div id='templates' style='color:red;font-size:16px;'>testtest111<div style='color:red'>{{title}}  {{title}}  111 aa bb {{message[0].name}} {{message}} {{a.b}} </div></div>";
+  "<div id='templates' style='color:red;font-size:16px;'>testtest111<div style='color:red'>{{title}}  {{title}}  111 aa bb {{message[0].name}} {{message}}</div></div>";
+// const res = Vue.compile(templates);
+Vue.mixin({
+  props: {
+    a: {
+      type: String,
+      default: "1",
+    },
+  },
+  beforeCreate() {
+    console.log(1);
+  },
+  created() {},
+  mounted() {},
+});
+
+Vue.mixin({
+  props: {
+    c: {
+      type: String,
+      default: "1",
+    },
+  },
+  beforeCreate() {
+    console.log(2);
+  },
+  created() {},
+  mounted() {},
+});
+
+var MyComponent = Vue.component("my-component", {
+  data() {
+    return {
+      f: 2,
+    };
+  },
+  template: "<button>{{f}}</button>",
+});
 
 const app = new Vue({
   el: "#app",
+  components: {
+    "my-component": {
+      data() {
+        return {
+          g: 1,
+        };
+      },
+      template: "<button>{{g}}</button>",
+    },
+  },
+  props: {
+    b: {
+      type: String,
+      default: "1",
+    },
+  },
   data() {
     return {
-      message: [[{name:1},1, 2]],
+      message: [[{ name: 1 }, 1, 2]],
       title: "Hello Vue",
-      a: { b: 2 },
-      test:1
+      test: 1,
     };
   },
+  beforeCreate() {
+    console.log(3);
+  },
+  created() {},
+  mounted() {},
   template: templates,
-  // render: (h) => h(Actions),
-}); //.$mount("#app");
-setTimeout(()=>{
+});
+setTimeout(() => {
+  console.log(app);
   // app.title = '123'
   // app.title = '456'
-
-  app.message[0].push('test')
   // app.message[0].name = 'message'
-
   // app.$nextTick(()=>{
   //   console.log(document.querySelector("#templates").innerHTML)
   // })
-},1000)
+}, 1000);
 
+class Parent {
+  constructor() {
+    this.name = 1;
+  }
 
+  test() {
+    console.log(123);
+  }
+}
+
+class child extends Parent {
+  constructor() {
+    super();
+  }
+  t() {
+    this.test();
+  }
+}
+
+new child().test();
