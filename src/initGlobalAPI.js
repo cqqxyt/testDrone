@@ -41,6 +41,8 @@ LIFECYCLE_HOOKS.forEach((hook) => {
   strats[hook] = mergeHook;
 });
 
+// strats.template = function() {};
+
 function mergeHook(parent, child) {
   if (child) {
     if (parent) {
@@ -82,7 +84,6 @@ export function mergeOptions(parent, child) {
     if (strats[key]) {
       return (opts[key] = strats[key](parent[key], child[key]));
     }
-
     if (isObject(parent[key]) && isObject(child[key])) {
       opts[key] = { ...parent[key], ...child[key] };
     } else {

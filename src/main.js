@@ -3,20 +3,24 @@
 import Vue from "./vue";
 // import Vue from "./vueO.js";
 // 创建构造器
-var Profile = Vue.extend({
-  template: "<p>{{firstName}} {{lastName}} aka {{alias}}</p>",
-  data: function() {
-    return {
-      firstName: "Walter",
-      lastName: "White",
-      alias: "Heisenberg",
-    };
-  },
-});
-console.log(new Profile());
+// var Profile = Vue.extend({
+//   template: "<p>{{firstName}} {{lastName}} aka {{alias}}</p>",
+//   data: function() {
+//     return {
+//       firstName: "Walter",
+//       lastName: "White",
+//       alias: "Heisenberg",
+//     };
+//   },
+// });
+// console.log(new Profile());
 // new Profile().$mount("#test");
-const templates =
-  "<div id='templates' style='color:red;font-size:16px;'>testtest111<div style='color:red'>{{title}}  {{title}}  111 aa bb {{message[0].name}} {{message}}</div></div>";
+const templates = `<div id='templates' style='color:red;font-size:16px;'>
+{{dom}}
+<div v-bind:style='style'>
+{{title}}  {{title}}  111 aa bb {{message[0].name}} {{message}}
+<div style="color:blue">{{title}}</div>
+</div></div>`;
 // const res = Vue.compile(templates);
 Vue.mixin({
   props: {
@@ -75,9 +79,11 @@ const app = new Vue({
   },
   data() {
     return {
+      style: "color:res",
       message: [[{ name: 1 }, 1, 2]],
       title: "Hello Vue",
       test: 1,
+      dom: "<span>123</span>",
     };
   },
   beforeCreate() {
@@ -87,12 +93,13 @@ const app = new Vue({
   mounted() {},
   template: templates,
 });
+
 setTimeout(() => {
   console.log(app);
-  // app.title = '123'
+  app.title = "123";
   // app.title = '456'
   // app.message[0].name = 'message'
   // app.$nextTick(()=>{
   //   console.log(document.querySelector("#templates").innerHTML)
   // })
-}, 1000);
+}, 3000);
